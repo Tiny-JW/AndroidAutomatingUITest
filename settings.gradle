@@ -1,0 +1,3 @@
+rootProject.name = "AndroidAutomatingUITest"
+include ':backendMock'
+include ':app'

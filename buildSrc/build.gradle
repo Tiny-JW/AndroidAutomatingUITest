@@ -1,0 +1,25 @@
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'kotlin'
+
+buildscript {
+    repositories {
+        google()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.1.3"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10"
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+dependencies {
+    implementation "pl.droidsonroids.yaml:snakeyaml:1.18-android"
+
+    implementation "com.android.tools.build:gradle:4.1.3"
+    implementation "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10"
+}

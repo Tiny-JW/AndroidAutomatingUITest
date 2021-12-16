@@ -1,0 +1,89 @@
+openapi: 3.0.1
+info:
+  title: Authentication service
+  description: Authenticating service
+  termsOfService: 'http://terms.of.service.if.needed'
+  contact:
+    email: do.we.add.contact@opeapi3.io
+  license:
+    name: Do We need licence info ?
+    url: 'http://licence.url'
+  version: 1.0.0
+externalDocs:
+  description: Click here for more info
+  url: 'https://tiny.com/'
+servers:
+  - url: 'https://mobile.dev.tiny.com'
+    description: Staging
+  - url: 'https://mobile.live.tiny.com'
+    description: Production
+tags:
+  - name: user
+    description: Register using mobile phone number
+    externalDocs:
+      description: Find out more
+      url: 'https://tiny.com/'
+paths:
+  /v1/otp:
+    post:
+      tags:
+        - user
+      summary: Request OTP
+      operationId: request-otp
+      responses:
+        '202':
+          description: Accepted.
+          content:
+            application/json:
+              schema:
+                title: OTPResponse
+                type: object
+                description: OTP response model
+                properties:
+                  retryAfterSeconds:
+                    type: integer
+                    format: int64
+                required:
+                  - retryAfterSeconds
+              examples:
+                example-success:
+                  value:
+                    retryAfterSeconds: 30
+        '400':
+          description: Unable to generate OTP.
+      description: Endpoint to trigger otp generation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OTPRequest'
+            examples:
+              example-success:
+                value:
+                  phoneNumber: 15607128888
+                  otpDeliveryType: VOICE
+        description: 'Country code, phone number, otp type.'
+components:
+  schemas:
+    OTPRequest:
+      title: OTPRequest
+      type: object
+      description: OTP Request model
+      properties:
+        phoneNumber:
+          type: string
+        otpDeliveryType:
+          type: string
+          enum:
+            - TEXT
+            - VOICE
+          example: VOICE
+      required:
+        - phoneNumber
+        - otpDeliveryType
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

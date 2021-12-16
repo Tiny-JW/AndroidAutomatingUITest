@@ -1,0 +1,55 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'kotlin-kapt'
+
+android {
+    defaultConfig {
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    compileSdkVersion 30
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 30
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        freeCompilerArgs = [
+                '-Xuse-experimental=kotlin.contracts.ExperimentalContracts',
+                '-Xopt-in=kotlin.RequiresOptIn',
+                '-Xuse-experimental=kotlin.time.ExperimentalTime',
+                '-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
+                '-Xopt-in=kotlinx.coroutines.FlowPreview',
+                '-Xinline-classes',
+                "-Xallow-result-return-type"
+        ]
+    }
+}
+
+dependencies {
+    api "com.squareup.okhttp3:mockwebserver:4.9.1"
+}
+
+tasks.register('generateBackendMockEndpoints', BackendMockEndpointsGeneratorTask) {
+    android.sourceSets.main.java.srcDirs outputDir
+}
+
+preBuild.dependsOn generateBackendMockEndpoints

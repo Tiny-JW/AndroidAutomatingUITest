@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AndroidAutomatingUITest</string>
+    <string name="login_screen_edittext_hint">15612345678</string>
+    <string name="login_phone_number_screen_subtitle">Please enter your mobile number</string>
+    <string name="login_phone_number_screen_title">Let’s get started!</string>
+    <string name="login_phone_number_country_flag">+86</string>
+    <string name="button_continue">continue</string>
+    <string name="login_success">Congratulations!</string>
+</resources>
